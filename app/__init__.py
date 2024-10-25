@@ -6,5 +6,4 @@ def create_app():
     app = Flask(__name__)
 
     app.register_blueprint(cats_bp)
-
     return app
