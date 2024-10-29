@@ -17,7 +17,7 @@ class Cat(db.Model):
 
 # cats = [
 #     Cat(1, "Luna", "black/white", "lazy"),
-#     Cat(2, "Simon", "black", "might be a human stuck in a cats body"),
+#     Cat(2, "Simon", "black", "might be a human stuck in a cat's body"),
 #     Cat(3, "Midnight", "black", "skittish"),
 #     Cat(4, "Leo", "gray tabby", "friendly"),
 #     Cat(5, "Ash", "gray", "cranky"),
