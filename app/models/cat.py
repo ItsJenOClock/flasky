@@ -15,22 +15,6 @@ class Cat(db.Model):
             personality=self.personality
         )
 
-
-# class Cat:
-#     def __init__(self, id, name, color, personality):
-#         self.id = id
-#         self.name = name
-#         self.color = color
-#         self.personality = personality
-    
-    # def to_dict(self):
-    #     return dict(
-    #         id=self.id,
-    #         name=self.name,
-    #         color=self.color,
-    #         personality=self.personality
-    #     )
-
 # cats = [
 #     Cat(1, "Luna", "black/white", "lazy"),
 #     Cat(2, "Simon", "black", "might be a human stuck in a cats body"),
