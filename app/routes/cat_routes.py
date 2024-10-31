@@ -10,7 +10,7 @@ def create_cat():
     name = request_body["name"]
     color = request_body["color"]
     personality = request_body["personality"]
-    
+
     new_cat = Cat(name=name, color=color, personality=personality)
     db.session.add(new_cat)
     db.session.commit()
@@ -20,7 +20,23 @@ def create_cat():
 
 @cats_bp.get("")
 def get_all_cats():
-    query = db.select(Cat).order_by(Cat.id)
+
+    query = db.select(Cat)
+
+    name_param = request.args.get("name")
+    if name_param:
+        query = query.where(Cat.name == name_param)
+
+    color_param = request.args.get("color")
+    if color_param:
+        query = query.where(Cat.color.ilike(f"%{color_param}%"))
+
+    personality_param = request.args.get("personality")
+    if personality_param:
+        query = query.where(Cat.personality.ilike(f"%{personality_param}%"))
+
+    query = query.order_by(Cat.id)
+
     cats = db.session.scalars(query)
 
     cats_response = [cat.to_dict() for cat in cats]
@@ -40,17 +56,20 @@ def update_cat(cat_id):
     cat.name = request_body["name"]
     cat.personality = request_body["personality"]
     cat.color = request_body["color"]
+
     db.session.commit()
 
-    return Response(status=204, mimetype='application/json')
+    return Response(status=204, mimetype="application/json")
 
 @cats_bp.delete("/<cat_id>")
 def delete_cat(cat_id):
     cat = validate_cat(cat_id)
+
     db.session.delete(cat)
     db.session.commit()
 
-    return Response(status=204, mimetype='application/json')
+    return Response(status=204, mimetype="application/json")
+
 
 def validate_cat(cat_id):
     try:
@@ -63,5 +82,5 @@ def validate_cat(cat_id):
 
     if not cat:
         abort(make_response({ "message": f"Cat {cat_id} not found"}, 404))
-
+    
     return cat
