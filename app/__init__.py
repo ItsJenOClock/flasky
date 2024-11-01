@@ -2,7 +2,6 @@ from flask import Flask
 from .routes.cat_routes import cats_bp
 from .db import db, migrate
 from .models import cat
-from dotenv import load_dotenv
 import os
 
 def create_app(config=None):
@@ -17,5 +16,4 @@ def create_app(config=None):
     db.init_app(app)
     migrate.init_app(app, db)
     app.register_blueprint(cats_bp)
-    
     return app
