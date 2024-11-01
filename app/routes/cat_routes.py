@@ -2,6 +2,8 @@ from flask import Blueprint, abort, make_response, request, Response
 from ..db import db
 from app.models.cat import Cat
 
+# curl -X POST -H 'Content-Type: application/json' -d '{"name":"Felix","color":"black and white","personality":"wonderful"}' 'http://localhost:5000/cats' | json_pp
+
 cats_bp = Blueprint("cats_bp", __name__, url_prefix="/cats")
 
 @cats_bp.post("")
