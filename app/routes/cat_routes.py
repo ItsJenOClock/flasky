@@ -5,9 +5,9 @@ from .route_utilities import validate_model
 
 # curl -X POST -H 'Content-Type: application/json' -d '{"name":"Felix","color":"black and white","personality":"wonderful"}' 'http://localhost:5000/cats' | json_pp
 
-cats_bp = Blueprint("cats_bp", __name__, url_prefix="/cats")
+bp = Blueprint("cats_bp", __name__, url_prefix="/cats")
 
-@cats_bp.post("")
+@bp.post("")
 def create_cat():
     request_body = request.get_json()
     try: 
@@ -21,7 +21,7 @@ def create_cat():
     response = new_cat.to_dict()
     return response, 201
 
-@cats_bp.get("")
+@bp.get("")
 def get_all_cats():
 
     query = db.select(Cat)
@@ -45,13 +45,13 @@ def get_all_cats():
     cats_response = [cat.to_dict() for cat in cats]
     return cats_response
 
-@cats_bp.get("/<cat_id>")
+@bp.get("/<cat_id>")
 def get_single_cat(cat_id):
     cat = validate_model(Cat, cat_id)
 
     return cat.to_dict()
 
-@cats_bp.put("/<cat_id>")
+@bp.put("/<cat_id>")
 def update_cat(cat_id):
     cat = validate_model(Cat, cat_id)
     request_body = request.get_json()
@@ -64,7 +64,7 @@ def update_cat(cat_id):
 
     return Response(status=204, mimetype="application/json")
 
-@cats_bp.delete("/<cat_id>")
+@bp.delete("/<cat_id>")
 def delete_cat(cat_id):
     cat = validate_model(Cat, cat_id)
 
