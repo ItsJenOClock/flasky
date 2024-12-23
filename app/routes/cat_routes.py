@@ -8,7 +8,7 @@ bp = Blueprint("cats_bp", __name__, url_prefix="/cats")
 @bp.post("")
 def create_cat():
     request_body = request.get_json()
-    return create_model(Cat, request_body)  
+    return create_model(Cat, request_body)
 
 @bp.get("")
 def get_all_cats():
@@ -17,6 +17,18 @@ def get_all_cats():
 @bp.get("/<cat_id>")
 def get_single_cat(cat_id):
     cat = validate_model(Cat,cat_id)
+    return cat.to_dict()
+
+@bp.patch("/<cat_id>/pet")
+def pet_cat(cat_id):
+    cat = validate_model(Cat, cat_id)
+
+    if cat.pet_count is None:
+        cat.pet_count = 1
+    else:
+        cat.pet_count += 1
+    
+    db.session.commit()
     return cat.to_dict()
 
 @bp.put("/<cat_id>")
